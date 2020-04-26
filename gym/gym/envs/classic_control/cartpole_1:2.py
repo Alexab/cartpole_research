@@ -4,7 +4,7 @@ Copied from http://incompleteideas.net/sutton/book/code/pole.c
 permalink: https://perma.cc/C9ZM-652R
 """
 
-#WandB init
+#added for wandb
 
 from __future__ import division
 from __future__ import print_function
@@ -21,15 +21,15 @@ from keras.callbacks import Callback as KerasCallback, CallbackList as KerasCall
 
 from keras.utils.generic_utils import Progbar
 
-#cartpole init
+#local init
 
 import math
 import gym
 from gym import spaces, logger
 from gym.utils import seeding
+#import numpy as np
 
-
-#WandB classes
+#added for wandb
 
 class Callback(KerasCallback):
     def _set_env(self, env):
@@ -144,6 +144,8 @@ class WandbLogger(Callback):
         self.metrics[episode].append(logs['metrics'])
         self.step += 1
 
+#here starts local prog
+
 
 class CartPoleEnv(gym.Env):
     """
@@ -191,7 +193,7 @@ class CartPoleEnv(gym.Env):
     def __init__(self):
         self.gravity = 9.8
         self.masscart = 1.0
-        self.masspole = 0.1
+        self.masspole = 0.5
         self.total_mass = (self.masspole + self.masscart)
         self.length = 0.5 # actually half the pole's length
         self.polemass_length = (self.masspole * self.length)
