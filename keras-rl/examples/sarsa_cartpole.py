@@ -1,4 +1,4 @@
-#added for wandb
+#WandB init
 from __future__ import division
 from __future__ import print_function
 import warnings
@@ -13,9 +13,7 @@ from keras import __version__ as KERAS_VERSION
 from keras.callbacks import Callback as KerasCallback, CallbackList as KerasCallbackList
 from keras.utils.generic_utils import Progbar
 
-#local init
-
- #import numpy as np
+#cartpole init
 import gym
 
 from keras.models import Sequential
@@ -26,7 +24,7 @@ from rl.agents import SARSAAgent
 from rl.policy import BoltzmannQPolicy
 
 
-#added for wandb
+#WandB classes
 class Callback(KerasCallback):
     def _set_env(self, env):
         self.env = env
@@ -140,7 +138,6 @@ class WandbLogger(Callback):
         self.metrics[episode].append(logs['metrics'])
         self.step += 1
 
-#here starts local prog
 
 ENV_NAME = 'CartPole-v0'
 
@@ -172,7 +169,7 @@ sarsa.compile(Adam(lr=1e-3), metrics=['mae'])
 # Okay, now it's time to learn something! We visualize the training here for show, but this
 # slows down training quite a lot. You can always safely abort the training prematurely using
 # Ctrl + C.
-sarsa.fit(env, nb_steps=50000, visualize=True, verbose=2, callbacks=[WandbLogger()])
+sarsa.fit(env, nb_steps=50000, visualize=False, verbose=2, callbacks=[WandbLogger()])
 
 # After training is done, we save the final weights.
 sarsa.save_weights('sarsa_{}_weights.h5f'.format(ENV_NAME), overwrite=True)
